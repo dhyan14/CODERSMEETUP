@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | CodersMEET</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #077b32;
+            --secondary-color: #066128;
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #c9d1d9;
+            --secondary-text: #8b949e;
+            --border-color: #30363d;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-container {
+            max-width: 1280px;
+            margin: 30px auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px var(--shadow-color);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-sidebar {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            overflow: hidden;
+            background: var(--bg-color);
+            margin-bottom: 25px;
+            box-shadow: 0 8px 16px var(--shadow-color);
+            animation: scaleIn 0.8s ease 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            padding: 20px 0;
+            animation: fadeIn 0.8s ease 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .profile-username {
+            font-size: 18px;
+            color: var(--secondary-text);
+            margin-bottom: 20px;
+        }
+
+        .edit-profile-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .edit-profile-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(7, 123, 50, 0.3);
+        }
+
+        .main-content {
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            animation: slideIn 0.8s ease 0.4s both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .nav-tab {
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .nav-tab:hover::after,
+        .nav-tab.active::after {
+            width: 100%;
+        }
+
+        .nav-tab.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-tab:hover {
+            color: var(--primary-color);
+        }
+
+        .skills-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            animation: fadeIn 0.8s ease 0.6s both;
+        }
+
+        .skills-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .skill-name {
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .skill-level {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 5px 10px;
+            background: var(--primary-color);
+            border-radius: 20px;
+        }
+
+        .no-skills {
+            color: var(--secondary-text);
+            text-align: center;
+            padding: 30px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .profile-avatar {
+                width: 180px;
+                height: 180px;
+                margin: 0 auto 20px;
+            }
+
+            .profile-info {
+                text-align: center;
+            }
+
+            .nav-tab {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-brand">CodersMEET</a>
+            <div class="nav-links">
+                <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <img id="userAvatar" src="" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name" id="userName">Loading...</h1>
+                <div class="profile-username" id="userUsername">@loading</div>
+                <button class="edit-profile-btn" onclick="location.href='dashboard.html'">
+                    <i class="fas fa-edit"></i> Edit profile
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <nav class="nav-tabs">
+                <a href="#overview" class="nav-tab active">Overview</a>
+                <a href="#repositories" class="nav-tab">Repositories</a>
+                <a href="#projects" class="nav-tab">Projects</a>
+            </nav>
+
+            <div class="skills-section">
+                <h2 class="skills-title">Skills and expertise</h2>
+                <div class="skills-grid" id="skillsGrid">
+                    <!-- Skills will be populated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Get profile data from localStorage
+                const profileData = JSON.parse(localStorage.getItem('currentProfile'));
+                console.log('Profile data:', profileData); // Debug log
+                
+                if (!profileData) {
+                    throw new Error('No profile data found');
+                }
+
+                // Update profile elements
+                document.getElementById('userName').textContent = profileData.fullName;
+                document.getElementById('userUsername').textContent = `@${profileData.username}`;
+                
+                // Set avatar
+                const avatarImg = document.getElementById('userAvatar');
+                if (profileData.avatarUrl) {
+                    avatarImg.src = profileData.avatarUrl;
+                } else {
+                    const initials = profileData.fullName
+                        .split(' ')
+                        .map(name => name[0])
+                        .join('')
+                        .toUpperCase();
+                    avatarImg.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+                        <rect width="100" height="100" fill="%23077b32"/>
+                        <text x="50" y="50" text-anchor="middle" dy="0.35em" fill="white" font-size="40">${initials}</text>
+                    </svg>`;
+                }
+
+                // Update skills
+                const skillsGrid = document.getElementById('skillsGrid');
+                if (profileData.skills && profileData.skills.length > 0) {
+                    skillsGrid.innerHTML = profileData.skills.map(skill => `
+                        <div class="skill-item" data-aos="fade-up" data-aos-delay="${Math.random() * 300}">
+                            <span class="skill-name">${skill.name}</span>
+                            <span class="skill-level">${skill.level}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    skillsGrid.innerHTML = '<p class="no-skills">No skills added yet</p>';
+                }
+
+                // Clean up
+                localStorage.removeItem('currentProfile');
+
+                // Add tab switching functionality
+                const tabs = document.querySelectorAll('.nav-tab');
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Remove active class from all tabs
+                        tabs.forEach(t => t.classList.remove('active'));
+                        // Add active class to clicked tab
+                        tab.classList.add('active');
+                    });
+                });
+
+                // Add logout functionality
+                window.logout = function() {
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load profile data');
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
+    <title>Sign Up | CodersMEET</title>
+    <style>
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: calc(100vh - 120px);
+            padding: 100px 50px;
+            margin-top: 20px;
+        }
+        .login-content {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            padding: 60px;
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .signup-form {
+            flex: 1;
+        }
+        .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .form-group i {
+            position: absolute;
+            left: 10px;
+            z-index: 1;
+            color: #666;
+        }
+        .username-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            width: 100%;
+            position: relative;
+        }
+        .username-container input {
+            width: 100%;
+            padding-right: 90px;
+        }
+        .check-btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            background: #077b32;
+            color: white;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 13px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 10;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px 30px;
+            padding-right: 90px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            height: 40px;
+            box-sizing: border-box;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #077b32;
+        }
+        #usernameAvailability {
+            margin-top: 4px;
+            font-size: 0.8em;
+        }
+        .form-options {
+            width: 100%;
+        }
+        .login-btn {
+            width: auto;
+            padding: 12px 30px;
+            margin-top: 20px;
+            background: #077b32;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        .login-btn:hover {
+            background: #056526;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 80px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .logo span {
+            color: #077b32;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .link a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+        .link a:hover {
+            color: #077b32;
+        }
+        .hamburg {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .dropdown {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .form-group {
+                width: 100%;
+            }
+            .hamburg {
+                display: block;
+            }
+            .links {
+                display: none;
+            }
+            .dropdown .links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .login-content {
+                padding: 15px;
+            }
+        }
+        .signup-text {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 10px;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .signup-text a {
+            color: #077b32;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            opacity: 1 !important;
+        }
+        .signup-text a:hover {
+            color: #056526;
+            text-decoration: underline;
+        }
+        .form-group input[type="email"] {
+            width: 100%;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                Coders <span>MEET</span>
+            </div>
+            <div class="links">
+                <div class="link"><a href="index.html">Home</a></div>
+                <div class="link"><a href="#">About</a></div>
+                <div class="link"><a href="#">Skills</a></div>
+                <div class="link"><a href="#">Services</a></div>
+                <div class="link"><a href="#">Contact</a></div>
+                <div class="link">
+                    <a href="login.html" style="background: #077b32; color: white; padding: 8px 16px; border-radius: 4px;">Login/Signup</a>
+                </div>
+            </div>
+            <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+        </div>
+        <div class="dropdown">
+            <div class="links">
+                <a href="index.html">Home</a>
+                <a href="#">About</a>
+                <a href="#">Skills</a>
+                <a href="#">Service</a>
+                <a href="#">Contact</a>
+                <a href="login.html" style="background: #077b32; color: white; padding: 8px 16px; border-radius: 4px;">Login/Signup</a>
+                <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+            </div>
+        </div>
+    </nav>
+    <section>
+        <div class="main-container">
+            <div class="login-content">
+                <div class="signup-form">
+                    <h2>Create Account</h2>
+                    <form id="signupForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" id="fullName" placeholder="Full Name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <i class="fa-solid fa-envelope"></i>
+                                <input type="email" id="email" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <i class="fa-solid fa-at"></i>
+                                <div class="username-container">
+                                    <input type="text" id="username" placeholder="Choose a username" required>
+                                    <button type="button" id="checkUsernameBtn" class="check-btn">
+                                        Check
+                                    </button>
+                                </div>
+                                <div id="usernameAvailability"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="password" placeholder="Password" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-options">
+                                <label>
+                                    <input type="checkbox" id="terms" required> I agree to the Terms & Conditions
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">Sign Up</button>
+                        <p class="signup-text">
+                            Already have an account? <a href="login.html">Login</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        let isUsernameAvailable = false;
+        
+        const usernameInput = document.getElementById('username');
+        const checkButton = document.getElementById('checkUsernameBtn');
+        const availabilityDiv = document.getElementById('usernameAvailability');
+        const signupForm = document.getElementById('signupForm');
+        
+        async function checkUsernameAvailability() {
+            const username = usernameInput.value.trim();
+            
+            if (!username) {
+                availabilityDiv.innerHTML = '<span style="color: red;">Please enter a username</span>';
+                return;
+            }
+
+            try {
+                checkButton.disabled = true;
+                checkButton.innerHTML = 'Checking...';
+                
+                const response = await fetch('http://localhost:5000/api/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username })
+                });
+                
+                const data = await response.json();
+                
+                if (data.available) {
+                    availabilityDiv.innerHTML = '<span style="color: green;">✓ Username is available!</span>';
+                    isUsernameAvailable = true;
+                } else {
+                    availabilityDiv.innerHTML = '<span style="color: red;">✗ Username is already taken</span>';
+                    isUsernameAvailable = false;
+                }
+            } catch (error) {
+                console.error('Error checking username:', error);
+                availabilityDiv.innerHTML = '<span style="color: red;">Error checking username</span>';
+            } finally {
+                checkButton.disabled = false;
+                checkButton.innerHTML = 'Check';
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            if (!isUsernameAvailable) {
+                alert('Please check username availability first');
+                return;
+            }
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const username = usernameInput.value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fullName,
+                        username,
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Registration failed');
+                }
+
+                alert('Registration successful! Please login.');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Signup error:', error);
+                alert(error.message || 'Registration failed');
+            }
+        }
+
+        checkButton.addEventListener('click', checkUsernameAvailability);
+        
+        usernameInput.addEventListener('input', function() {
+            isUsernameAvailable = false;
+            availabilityDiv.innerHTML = '';
+        });
+        
+        signupForm.addEventListener('submit', handleSignup);
+        
+        function hamburg() {
+            document.querySelector('.dropdown').style.display = 'block';
+        }
+        
+        function cancel() {
+            document.querySelector('.dropdown').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

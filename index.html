@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
+    <title>Coders Portfolio</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-container"> 
+            <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
+                Coders <span>MEET</span>
+            </div>
+            <div class="links">
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                    <a href="#">Home</a>
+                </div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+                    <a href="#about">About Us</a>
+                </div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <a href="#features">Features</a>
+                </div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+                    <a href="#">Contact Us</a>
+                </div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+                    <a href="login.html" class="cta-button">Login</a>
+                </div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="600">
+                    <a href="signup.html" class="cta-button">Sign Up</a>
+                </div>
+                <div class="link theme-toggle" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="700">
+                    <button id="theme-btn" onclick="toggleTheme()">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+            </div>
+            <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+        </div>
+        <div class="dropdown">
+            <div class="links">
+                <a href="#">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#features">Features</a>
+                <a href="#">Contact Us</a>
+                <a href="login.html">Login</a>
+                <a href="signup.html">Sign Up</a>
+                <button id="theme-btn-mobile" onclick="toggleTheme()">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+            </div>
+        </div>
+    </nav>
+    <section>
+        <div class="main-container">
+            <div class="content">
+                <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700">Hey <span>Innovators</span> and <span>Coders!</span></h1>
+                <div class="typewriter" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900">Welcome to <span class="typewriter-text"></span><label for="">|</label></div>
+                <p data-aos="flip-down" data-aos-duration="1500" data-aos-delay="1100">A platform designed to connect innovative thinkers with skilled coders. If you have a groundbreaking idea but lack coding skills, or if you're a coder looking for exciting projects to build, this is the place for you! Form squads, collaborate on ideas, solve weekly coding challenges, earn points, and become the MVP. Together, let's turn ideas into reality and build a brighter tech future!</p>
+                <div class="social-links">
+                    <a href="#" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1300"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1400"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1500"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1600"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+                <div class="btn" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="1800">
+                    <button>Join now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <h2 data-aos="fade-down" data-aos-duration="1500">About Us</h2>
+            <div class="about-content">
+                <div class="about-image" data-aos="fade-right" data-aos-duration="1500">
+                    <img src="images/about-codersmeet.png" alt="Coders collaborating" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                </div>
+                <div class="about-text" data-aos="fade-left" data-aos-duration="1500">
+                    <h3>Who We Are</h3>
+                    <p>We are a passionate team of developers dedicated to creating innovative solutions and fostering a community of coders. Our mission is to empower individuals through technology and make coding accessible to everyone.</p>
+                    
+                    <div class="about-stats" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="stat">
+                            <h4>5+</h4>
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="stat">
+                            <h4>100+</h4>
+                            <p>Projects Completed</p>
+                        </div>
+                        <div class="stat">
+                            <h4>50+</h4>
+                            <p>Happy Clients</p>
+                        </div>
+                    </div>
+
+                    <div class="about-features" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+                        <div class="feature">
+                            <i class="fas fa-code"></i>
+                            <h5>Clean Code</h5>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-laptop-code"></i>
+                            <h5>Modern Design</h5>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h5>Responsive</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="about-section">
+        <div class="about-container">
+            <h2 data-aos="fade-down" data-aos-duration="1500">Features</h2>
+            <div class="about-content">
+                <div class="about-image" data-aos="fade-right" data-aos-duration="1500">
+                    <img src="features-image.jpg" alt="Features">
+                </div>
+                <div class="about-text" data-aos="fade-left" data-aos-duration="1500">
+                    <h3>What We Offer</h3>
+                    <p>Our platform provides cutting-edge features designed to enhance your coding experience. From collaborative tools to learning resources, we've got everything you need to succeed in your coding journey.</p>
+                    
+                    <div class="about-stats" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="stat">
+                            <h4>24/7</h4>
+                            <p>Support</p>
+                        </div>
+                        <div class="stat">
+                            <h4>1000+</h4>
+                            <p>Resources</p>
+                        </div>
+                        <div class="stat">
+                            <h4>10+</h4>
+                            <p>Languages</p>
+                        </div>
+                    </div>
+
+                    <div class="about-features" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+                        <div class="feature">
+                            <i class="fas fa-users"></i>
+                            <h5>Community</h5>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-book"></i>
+                            <h5>Learning</h5>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-tools"></i>
+                            <h5>Tools</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({offset:0});
+        
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                // Update navigation for logged-in users
+                const loginLink = document.querySelector('a[href="login.html"]');
+                const signupLink = document.querySelector('a[href="signup.html"]');
+                if (loginLink) {
+                    loginLink.href = 'dashboard.html';
+                    loginLink.textContent = 'Dashboard';
+                }
+                if (signupLink) {
+                    signupLink.href = '#';
+                    signupLink.textContent = 'Logout';
+                    signupLink.onclick = function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem('user');
+                        window.location.href = 'index.html';
+                    };
+                }
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('theme-btn');
+            const themeBtnMobile = document.getElementById('theme-btn-mobile');
+            
+            body.classList.toggle('dark-theme');
+            
+            // Update button icons
+            if (body.classList.contains('dark-theme')) {
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                themeBtnMobile.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                themeBtnMobile.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            // Save theme preference
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+        }
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-btn').innerHTML = '<i class="fas fa-moon"></i>';
+            document.getElementById('theme-btn-mobile').innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        // Google OAuth Client ID
+        const googleClientId = '212156666010-qf09rl4mhe5pc2lq5lt04323ucaje2pg.apps.googleusercontent.com';
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

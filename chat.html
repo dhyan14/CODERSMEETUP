@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat | CodersMEET</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            height: calc(100vh - 100px);
+        }
+
+        .contacts-list {
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-y: auto;
+        }
+
+        .contact-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-item:hover {
+            background: rgba(7, 123, 50, 0.1);
+        }
+
+        .contact-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .chat-box {
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .messages-container {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        .message.sent {
+            background: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .message.received {
+            background: var(--border-color);
+            align-self: flex-start;
+        }
+
+        .message-input {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .message-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .message-input button {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .message-input button:hover {
+            background: #066128;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-username {
+            font-size: 0.8em;
+            color: var(--secondary-text);
+        }
+
+        .message-time {
+            font-size: 0.7em;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .message-content {
+            word-break: break-word;
+        }
+
+        .contact-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .contact-item.active .contact-username {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .no-contacts, .error-message {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .error-message {
+            color: #ff4444;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+            }
+
+            .chat-container {
+                margin-top: 80px; /* Add space for fixed navbar */
+                grid-template-columns: 1fr; /* Stack layout on mobile */
+                height: calc(100vh - 140px);
+                padding: 0 10px;
+            }
+
+            .contacts-list {
+                position: fixed;
+                left: -300px;
+                top: 60px;
+                bottom: 0;
+                width: 280px;
+                z-index: 100;
+                transition: left 0.3s ease;
+                background: var(--card-bg);
+            }
+
+            .contacts-list.active {
+                left: 0;
+            }
+
+            /* Add toggle button for contacts */
+            .contacts-toggle {
+                display: block;
+                position: fixed;
+                left: 10px;
+                bottom: 20px;
+                z-index: 101;
+                padding: 12px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                cursor: pointer;
+            }
+
+            .chat-box {
+                height: calc(100vh - 140px);
+            }
+
+            .message-input {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                padding: 10px;
+                z-index: 99;
+            }
+
+            .messages-container {
+                padding-bottom: 70px; /* Space for fixed message input */
+            }
+
+            /* Adjust message bubbles for mobile */
+            .message {
+                max-width: 85%;
+            }
+        }
+
+        /* Additional mobile optimizations */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 10px;
+            }
+
+            .nav-brand {
+                font-size: 1.2rem;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+
+            .message-input input {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-brand">CodersMEET</a>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="profile.html">Profile</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <button class="contacts-toggle" id="contactsToggle" style="display: none;">
+        <i class="fas fa-users"></i>
+    </button>
+
+    <div class="chat-container">
+        <div class="contacts-list" id="contactsList">
+            <!-- Contacts will be loaded here -->
+        </div>
+        <div class="chat-box">
+            <div class="chat-header" id="chatHeader">
+                Select a contact to start chatting
+            </div>
+            <div class="messages-container" id="messagesContainer">
+                <!-- Messages will be loaded here -->
+            </div>
+            <div class="message-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('user'));
+        let socket = io('http://localhost:5000');
+        let selectedContact = null;
+
+        // Check authentication first
+        if (!currentUser || !currentUser.id) {
+            window.location.href = 'login.html';
+        }
+
+        // Load contacts
+        async function loadContacts() {
+            try {
+                console.log('Current user:', currentUser); // Debug log
+                
+                const response = await fetch(`http://localhost:5000/api/users?userId=${currentUser.id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch contacts');
+                }
+                
+                const users = await response.json();
+                console.log('Fetched users:', users); // Debug log
+                
+                if (!Array.isArray(users)) {
+                    throw new Error('Invalid response format');
+                }
+                
+                const contactsList = document.getElementById('contactsList');
+                if (users.length === 0) {
+                    contactsList.innerHTML = '<div class="no-contacts">No other users found</div>';
+                    return;
+                }
+                
+                contactsList.innerHTML = users.map(user => `
+                    <div class="contact-item" onclick="selectContact('${user._id}', '${user.fullName}')" 
+                         data-userid="${user._id}">
+                        <div class="contact-info">
+                            <div class="contact-name">${user.fullName}</div>
+                            <div class="contact-username">@${user.username}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading contacts:', error);
+                document.getElementById('contactsList').innerHTML = 
+                    '<div class="error-message">Failed to load contacts. Please refresh the page.</div>';
+            }
+        }
+
+        // Select contact and load chat history
+        async function selectContact(userId, name) {
+            // Remove active class from all contacts
+            document.querySelectorAll('.contact-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected contact
+            document.querySelector(`[data-userid="${userId}"]`).classList.add('active');
+            
+            selectedContact = userId;
+            document.getElementById('chatHeader').textContent = name;
+            
+            try {
+                const response = await fetch(`http://localhost:5000/api/messages/${currentUser.id}?with=${userId}`);
+                const messages = await response.json();
+                
+                const messagesContainer = document.getElementById('messagesContainer');
+                messagesContainer.innerHTML = messages.map(msg => `
+                    <div class="message ${msg.sender._id === currentUser.id ? 'sent' : 'received'}">
+                        <div class="message-content">${msg.message}</div>
+                        <div class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</div>
+                    </div>
+                `).join('');
+                
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Focus on message input
+                document.getElementById('messageInput').focus();
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                alert('Failed to load messages. Please try again.');
+            }
+        }
+
+        // Send message
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (!message || !selectedContact) return;
+
+            try {
+                socket.emit('sendMessage', {
+                    senderId: currentUser.id,
+                    receiverId: selectedContact,
+                    message: message
+                });
+
+                // Add message to UI
+                const messagesContainer = document.getElementById('messagesContainer');
+                messagesContainer.innerHTML += `
+                    <div class="message sent">
+                        <div class="message-content">${message}</div>
+                        <div class="message-time">${new Date().toLocaleTimeString()}</div>
+                    </div>
+                `;
+                
+                messageInput.value = '';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Failed to send message. Please try again.');
+            }
+        }
+
+        // Handle new messages
+        socket.on('newMessage', (data) => {
+            if (data.sender === selectedContact) {
+                const messagesContainer = document.getElementById('messagesContainer');
+                messagesContainer.innerHTML += `
+                    <div class="message received">
+                        <div class="message-content">${data.message}</div>
+                        <div class="message-time">${new Date(data.timestamp).toLocaleTimeString()}</div>
+                    </div>
+                `;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadContacts();
+            
+            // Add socket connection error handling
+            socket.on('connect_error', (error) => {
+                console.error('Socket connection error:', error);
+                alert('Connection error. Please refresh the page.');
+            });
+        });
+
+        // Handle enter key in message input
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Add logout function if not already present
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html> 

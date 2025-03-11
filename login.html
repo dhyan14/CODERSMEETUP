@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Login - Coders Portfolio</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                Coders <span>MEET</span>
+            </div>
+            <div class="links">
+                <div class="link"><a href="index.html">Home</a></div>
+                <div class="link"><a href="signup.html">Sign Up</a></div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="welcomeMessage" style="text-align: center; margin: 20px; display: none;">
+        <h2>Welcome back, <span id="userName"></span>!</h2>
+    </div>
+
+    <section>
+        <div class="main-container">
+            <div class="login-content">
+                <h2>Welcome Back</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                    <p class="signup-text">
+                        Don't have an account? <a href="signup.html">Sign up</a>
+                    </p>
+                </form>
+                <div id="server-status" class="server-status"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const loginBtn = document.querySelector('.login-btn');
+            
+            try {
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                const response = await fetch('http://localhost:5000/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Login failed');
+                }
+                
+                // Store user data
+                localStorage.setItem('user', JSON.stringify({
+                    id: data._id,
+                    fullName: data.fullName,
+                    username: data.username,
+                    email: data.email
+                }));
+                
+                // Show welcome message
+                document.getElementById('userName').textContent = data.fullName;
+                document.getElementById('welcomeMessage').style.display = 'block';
+                
+                loginBtn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                
+                // Delay redirect to show welcome message
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            } catch (error) {
+                console.error('Login error:', error);
+                loginBtn.innerHTML = 'Login';
+                alert(error.message || 'Login failed');
+            }
+        });
+
+        // Check server connection
+        fetch('http://localhost:5000/api/status')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server status:', data);
+                const serverStatus = document.getElementById('server-status');
+                if (serverStatus) {
+                    serverStatus.textContent = `Server: ${data.status}`;
+                    serverStatus.style.color = data.status === 'connected' ? 'green' : 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Server connection error:', error);
+                const serverStatus = document.getElementById('server-status');
+                if (serverStatus) {
+                    serverStatus.textContent = 'Server: Not connected';
+                    serverStatus.style.color = 'red';
+                }
+            });
+    </script>
+</body>
+</html>
